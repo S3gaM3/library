@@ -7,6 +7,7 @@ import Login from './components/Login.tsx';
 import Favorites from './pages/Favorites.tsx';
 import Admin from './pages/Admin.tsx';  // Панель администратора
 import { RootState } from './store/store.ts';
+import BookReader from './components/BookReader.tsx';
 
 const AppRoutes = () => {
   // Получаем пользователя из Redux store
@@ -60,7 +61,7 @@ const AppRoutes = () => {
           }
         />
         
-        {/* Добавь другие маршруты по аналогии */}
+        <Route path="/book/:id/reader" element={<BookReader />} />
       </Routes>
     </Router>
   );

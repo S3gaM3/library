@@ -1,29 +1,13 @@
+// features/favoritesSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  genre: string;
-  cover: string;
-}
+import { Book } from '../types';
 
 interface FavoritesState {
-  list: Book[];
+  favorites: Book[];
 }
 
-const loadFavoritesFromLocalStorage = (): Book[] => {
-  try {
-    const favorites = localStorage.getItem('favorites');
-    return favorites ? JSON.parse(favorites) : [];
-  } catch (error) {
-    console.error('Ошибка при загрузке данных из localStorage', error);
-    return [];
-  }
-};
-
 const initialState: FavoritesState = {
-  list: loadFavoritesFromLocalStorage(),
+  favorites: [],
 };
 
 const favoritesSlice = createSlice({
@@ -31,16 +15,14 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addFavorite: (state, action: PayloadAction<Book>) => {
-      // Проверяем, если книга уже есть в избранных
-      const isAlreadyFavorite = state.list.some((book) => book.id === action.payload.id);
-      if (!isAlreadyFavorite) {
-        state.list.push(action.payload);
-        localStorage.setItem('favorites', JSON.stringify(state.list));
+      // Добавляем книгу в избранное, если ее нет
+      if (!state.favorites.some(book => book.id === action.payload.id)) {
+        state.favorites.push(action.payload);
       }
     },
     removeFavorite: (state, action: PayloadAction<string>) => {
-      state.list = state.list.filter((book) => book.id !== action.payload);
-      localStorage.setItem('favorites', JSON.stringify(state.list));
+      // Удаляем книгу из избранного по id
+      state.favorites = state.favorites.filter(book => book.id !== action.payload);
     },
   },
 });

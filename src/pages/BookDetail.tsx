@@ -1,27 +1,45 @@
 // src/pages/BookDetail.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store.ts';
-import ReviewList from '../components/ReviewList.tsx';
-import DownloadButton from '../components/DownloadButton.tsx';
+import axios from 'axios'; // Библиотека для работы с API
 
-const BookDetail: React.FC = () => {
+const BookDetail = () => {
   const { id } = useParams();
-  const book = useSelector((state: RootState) => state.books.list.find((b) => b.id === id));
+  const [book, setBook] = useState<any>(null);  // Здесь будет храниться информация о книге
+  const [loading, setLoading] = useState(true);
 
-  if (!book) {
-    return <p>Книга не найдена.</p>;
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const response = await axios.get(`https://openlibrary.org/works/${id}.json`);
+        setBook(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching book details:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchBook();
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
-    <div className="p-6">
-      <img src={book.cover} alt={book.title} className="w-48 h-64 object-cover rounded mb-4" />
-      <h1 className="text-3xl font-bold">{book.title}</h1>
-      <p className="text-lg text-gray-700 mt-2">Автор: {book.author}</p>
-      <p className="mt-4">📖 {book.genre}</p>
-      <DownloadButton fileUrl={book.cover} />
-      <ReviewList bookId={book.id} />
+    <div>
+      <h2>{book.title}</h2>
+      <h3>by {book.authors && book.authors[0].name}</h3>
+      <p>{book.description ? book.description.value : 'No description available'}</p>
+
+      {/* Здесь вы можете добавить ссылку на PDF или текстовый контент */}
+      <div>
+        {/* Пример ссылки на PDF */}
+        <a href={`https://archive.org/download/${book.cover_id}/book.pdf`} target="_blank" rel="noopener noreferrer">
+          Читать книгу
+        </a>
+      </div>
     </div>
   );
 };
