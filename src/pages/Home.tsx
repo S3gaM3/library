@@ -1,26 +1,27 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setBooks } from '../features/booksSlice';
-import { RootState } from '../store/store';
-import { fetchBooks } from '../services/bookService';
-import BookCard from '../components/BookCard';
+// pages/Home.tsx
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setBooks } from '../features/booksSlice.ts';
+import { fetchBooks } from '../services/bookService.ts';
+import BookList from '../components/BookList.tsx';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const books = useSelector((state: RootState) => state.books.list);
 
   useEffect(() => {
-    fetchBooks().then((data) => dispatch(setBooks(data)));
+    // Загрузка книг при монтировании компонента
+    const loadBooks = async () => {
+      const books = await fetchBooks('harry potter');  // Пример поиска книг
+      dispatch(setBooks(books));
+    };
+
+    loadBooks();
   }, [dispatch]);
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">📚 Электронная библиотека</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {books.map((book) => (
-          <BookCard key={book.id} book={book} />
-        ))}
-      </div>
+    <div className="home">
+      <h1>Welcome to the Library</h1>
+      <BookList />
     </div>
   );
 };

@@ -1,19 +1,13 @@
+// features/booksSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  genre: string;
-  cover: string;
-}
+import { Book } from '../types';
 
 interface BooksState {
-  list: Book[];
+  items: Book[];
 }
 
 const initialState: BooksState = {
-  list: [],
+  items: [],
 };
 
 const booksSlice = createSlice({
@@ -21,7 +15,7 @@ const booksSlice = createSlice({
   initialState,
   reducers: {
     setBooks: (state, action: PayloadAction<Book[]>) => {
-      state.list = action.payload;
+      state.items = action.payload;
     },
   },
 });
