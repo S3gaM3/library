@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Routes, Link } from "react-router-dom";
+import { Container, AppBar, Toolbar, Typography, Button } from "@mui/material";
+import BookList from "./components/BookList";
+import BookDetails from "./components/BookDetails";
+import Login from "./components/Login";
+import AuthContext, { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Электронная библиотека
+          </Typography>
+          <AuthContext.Consumer>
+            {({ user, logout }) =>
+              user ? (
+                <>
+                  <Button color="inherit" component={Link} to="/">Каталог</Button>
+                  <Button color="inherit" onClick={logout}>Выйти</Button>
+                </>
+              ) : (
+                <Button color="inherit" component={Link} to="/login">Войти</Button>
+              )
+            }
+          </AuthContext.Consumer>
+        </Toolbar>
+      </AppBar>
+      <Container>
+        <Routes>
+          <Route path="/" element={<BookList />} />
+          <Route path="/book/:id" element={<BookDetails />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Container>
+    </AuthProvider>
   );
 }
 
