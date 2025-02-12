@@ -14,7 +14,7 @@ DB_CONFIG = {
 }
 
 # 🔹 Папка с книгами (измените путь!)
-BOOKS_FOLDER = r"C:\Users\Sega\Documents\GitHub\library\books"
+BOOKS_FOLDER = r"C:\Users\Sega\Documents\GitHub\library\BookInsert\books"
 
 # 🔹 Функция подключения к MySQL
 def connect_db():
