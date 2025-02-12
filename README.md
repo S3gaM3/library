@@ -7,7 +7,7 @@
 ### Шаг 1: Клонирование репозитория
 
 1. Клонируйте репозиторий:
-   ```bash
+   
    git clone https://github.com/S3gaM3/library.git
    cd library
    
@@ -15,14 +15,12 @@
 
 Убедитесь, что у вас установлен Node.js и npm:
 
-bash
-Копировать
 node -v
 npm -v
+
 Установите зависимости:
 
-bash
-Копировать
+
 npm install
 
 Шаг 3: Настройка Firebase
@@ -30,8 +28,7 @@ npm install
 Создайте проект на Firebase Console.
 Перейдите в "Project Settings" > "Firebase SDK snippet" > "Config" и скопируйте конфигурационные данные.
 Замените конфигурацию в src/firebaseConfig.js:
-javascript
-Копировать
+
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
@@ -52,8 +49,7 @@ export { auth };
 Шаг 4: Запуск приложения
 
 Запустите приложение:
-bash
-Копировать
+
 npm start
 Приложение будет доступно по адресу: http://localhost:3000.
 
@@ -66,15 +62,12 @@ npm start
 
 Если вы хотите создать оптимизированную сборку для продакшн:
 
-bash
-Копировать
+
 npm run build
 Проблемы и их решения
+
 Ошибка: module not found
 Убедитесь, что вы выполнили команду npm install и все зависимости установлены.
 
 Проблемы с Firebase
 Проверьте, что вы правильно скопировали конфигурацию Firebase и активировали Firebase Authentication с использованием email и пароля.
-
-Лицензия
-Этот проект распространяется под лицензией MIT. Подробности можно найти в файле LICENSE.
