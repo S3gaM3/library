@@ -4,6 +4,7 @@ import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
+
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +24,7 @@ const Register = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box mt={4} p={3} boxShadow={3} borderRadius={2}>
+      <Box mt={4} p={3} className="container">
         <Typography variant="h5" mb={2}>Регистрация</Typography>
         {error && <Typography color="error">{error}</Typography>}
         <form onSubmit={handleRegister}>
@@ -47,7 +48,13 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
             Зарегистрироваться
           </Button>
         </form>

@@ -1,31 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import { Container, AppBar, Toolbar, Typography, Button } from "@mui/material";
 import BookList from "./components/BookList";
 import BookDetails from "./components/BookDetails";
 import Login from "./components/Login";
-import AuthContext, { AuthProvider } from "./context/AuthContext";
+import AuthContext from "./context/AuthContext";
+import "./styles/main.css";  // Импортируем стили
 
 function App() {
+  const { user, logout } = useContext(AuthContext);
+
   return (
-    <AuthProvider>
-      <AppBar position="static">
+    <div>
+      <AppBar position="static" className="app-bar">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Электронная библиотека
           </Typography>
-          <AuthContext.Consumer>
-            {({ user, logout }) =>
-              user ? (
-                <>
-                  <Button color="inherit" component={Link} to="/">Каталог</Button>
-                  <Button color="inherit" onClick={logout}>Выйти</Button>
-                </>
-              ) : (
-                <Button color="inherit" component={Link} to="/login">Войти</Button>
-              )
-            }
-          </AuthContext.Consumer>
+          {user ? (
+            <>
+              <Button color="inherit" component={Link} to="/">Каталог</Button>
+              <Button color="inherit" onClick={logout}>Выйти</Button>
+            </>
+          ) : (
+            <Button color="inherit" component={Link} to="/login">Войти</Button>
+          )}
         </Toolbar>
       </AppBar>
       <Container>
@@ -35,7 +34,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </Container>
-    </AuthProvider>
+    </div>
   );
 }
 

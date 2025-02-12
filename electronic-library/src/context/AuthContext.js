@@ -2,21 +2,19 @@ import React, { createContext, useState, useEffect } from "react";
 import { auth } from "../firebaseConfig";
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null); // ✅ Убедитесь, что передается `null`, а не `undefined`
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // 🔹 Отслеживаем вход пользователя
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
 
-    return () => unsubscribe(); // Очистка подписки при размонтировании компонента
+    return () => unsubscribe();
   }, []);
 
-  // 🔹 Функция входа
   const login = async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -27,7 +25,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // 🔹 Функция выхода
   const logout = async () => {
     try {
       await signOut(auth);

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { Container, TextField, Button, Typography, Box, Alert } from "@mui/material";
 
+
 const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -21,9 +22,11 @@ const Login = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box mt={4} p={3} boxShadow={3} borderRadius={2}>
-        <Typography variant="h5" mb={2}>Вход в систему</Typography>
-        {error && <Alert severity="error">{error}</Alert>}
+      <Box mt={4} p={3} className="container">
+        <Typography variant="h5" mb={2}>
+          Вход в систему
+        </Typography>
+        {error && <Alert severity="error" className="alert-error">{error}</Alert>}
         <TextField
           fullWidth
           label="Email"
@@ -41,7 +44,13 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button variant="contained" color="primary" fullWidth sx={{ mt: 2 }} onClick={handleLogin}>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ mt: 2 }}
+          onClick={handleLogin}
+        >
           Войти
         </Button>
       </Box>

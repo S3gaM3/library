@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
-import { Card, CardContent, Typography, Button, Grid, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import { motion } from "framer-motion";
+import { FaBook } from "react-icons/fa";
+
 
 const BookList = () => {
   const { user } = useContext(AuthContext);
@@ -12,7 +15,7 @@ const BookList = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login"); // Если нет пользователя, перенаправляем на страницу входа
+      navigate("/login");
       return;
     }
 
@@ -22,36 +25,45 @@ const BookList = () => {
         setLoading(false);
       })
       .catch(error => {
-        console.error("Ошибка при загрузке книг:", error);
+        console.error("Ошибка загрузки книг:", error);
         setLoading(false);
       });
   }, [user, navigate]);
 
-  if (!user) return null; // Если нет пользователя, ничего не показываем
+  if (!user) return null;
 
   return (
-    <Grid container spacing={3} mt={2}>
-      {loading && <CircularProgress sx={{ margin: "20px auto" }} />}
+    <div className="container">
+      <h2>📚 Электронная библиотека</h2>
+
+      {loading && <div className="loading"><CircularProgress /></div>}
 
       {books.length === 0 && !loading && (
-        <Typography variant="h6" color="error" sx={{ mt: 2 }}>
-          Нет доступных книг.
-        </Typography>
+        <p className="text-center text-red-500">Нет доступных книг.</p>
       )}
 
-      {books.map((book) => (
-        <Grid item xs={12} sm={6} md={4} key={book.id}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">{book.title}</Typography>
-              <Button component={Link} to={`/book/${book.id}`} variant="contained" color="primary" sx={{ mt: 2 }}>
-                Читать
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+      {/* Сетка карточек */}
+      <div className="grid">
+        {books.map((book) => (
+          <motion.div
+            key={book.id}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95, rotate: 1 }}
+            onClick={() => navigate(`/book/${book.id}`)}
+            className="card"
+          >
+            <div className="flex items-center justify-between">
+              <FaBook className="icon" />
+              <span className="text-sm text-gray-500">
+                {Math.floor(Math.random() * 500) + 100} стр.
+              </span>
+            </div>
+            <h3>{book.title}</h3>
+            <p className="text-gray-500 text-sm italic">Жанр: Художественная литература</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
   );
 };
 

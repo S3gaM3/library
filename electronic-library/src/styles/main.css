@@ -1,0 +1,93 @@
+/* 🔹 Сброс стилей */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
+}
+
+/* 🔹 Контейнер */
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+/* 🔹 Сетка карточек (3x3x3) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 3 в ряду */
+  gap: 20px;
+  justify-content: center;
+}
+
+/* 🔹 Карточки */
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 🔹 Заголовки */
+h1, h2, h3 {
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 🔹 Анимация загрузки */
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+  margin-top: 20px;
+}
+
+/* 🔹 Кнопки */
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* 🔹 Стилизация AppBar */
+.app-bar {
+  background-color: #3f51b5;
+  padding: 15px;
+}
+
+.app-bar .MuiTypography-root {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.app-bar .MuiButton-root {
+  color: white;
+}
+
+.app-bar .MuiButton-root:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
