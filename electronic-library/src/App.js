@@ -4,8 +4,9 @@ import { Container, AppBar, Toolbar, Typography, Button } from "@mui/material";
 import BookList from "./components/BookList";
 import BookDetails from "./components/BookDetails";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import AuthContext from "./context/AuthContext";
-import "./styles/main.css";  // Импортируем стили
+import "./styles/main.css"; // Импортируем стили
 
 function App() {
   const { user, logout } = useContext(AuthContext);
@@ -23,7 +24,10 @@ function App() {
               <Button color="inherit" onClick={logout}>Выйти</Button>
             </>
           ) : (
-            <Button color="inherit" component={Link} to="/login">Войти</Button>
+            <>
+              <Button color="inherit" component={Link} to="/login">Войти</Button>
+              <Button color="inherit" component={Link} to="/register">Регистрация</Button>
+            </>
           )}
         </Toolbar>
       </AppBar>
@@ -32,6 +36,7 @@ function App() {
           <Route path="/" element={<BookList />} />
           <Route path="/book/:id" element={<BookDetails />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} /> {/* Добавили маршрут для регистрации */}
         </Routes>
       </Container>
     </div>
